@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>net-core-bootcamp-b1</name>
+    </assembly>
+    <members>
+        <member name="M:net_core_bootcamp_b1.Controllers.ProductController.Get(System.String)">
+            <summary>
+            Get All Products
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
