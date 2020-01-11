@@ -14,6 +14,12 @@ namespace net_core_bootcamp_b1.Controllers
     {
         private static readonly IList<Product> data = new List<Product>();
 
+        /// <summary>
+        ///  Git Example Changes
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+
         [HttpPost("Add")]
         public IActionResult Add([FromBody]Product model)
         {
