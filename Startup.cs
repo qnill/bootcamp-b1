@@ -46,6 +46,7 @@ namespace net_core_bootcamp_b1
 
             // DI
             services.AddSingleton<IProductService, ProductService>();
+            services.AddSingleton<IEventService, EventService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
