@@ -19,7 +19,6 @@ namespace net_core_bootcamp_b1.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-
         [HttpPost("Add")]
         public IActionResult Add([FromBody]Product model)
         {
