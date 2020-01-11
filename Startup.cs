@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using net_core_bootcamp_b1.Services;
 using System;
 using System.IO;
 using System.Reflection;
@@ -42,6 +43,9 @@ namespace net_core_bootcamp_b1
             });
 
             services.AddControllers();
+
+            // DI
+            services.AddSingleton<IProductService, ProductService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

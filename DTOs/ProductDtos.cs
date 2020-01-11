@@ -1,17 +1,22 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace net_core_bootcamp_b1.DTOs
 {
     public class ProductAddDto
     {
+        [Required, MaxLength(50)]
         public string Name { get; set; }
         public string Desc { get; set; }
-        public double Price { get; set; }
+        [Required, Range(0, 1000)]
+        public double? Price { get; set; }
     }
 
     public class ProductUpdateDto
     {
+        [Required]
         public Guid? Id { get; set; }
+        [Required, MaxLength(50)]
         public string Name { get; set; }
         public string Desc { get; set; }
     }
