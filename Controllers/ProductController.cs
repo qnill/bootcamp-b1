@@ -25,6 +25,11 @@ namespace net_core_bootcamp_b1.Controllers
             return Ok($"{model.Name} eklendi");
         }
 
+        /// <summary>
+        ///  Git example master
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
          [HttpPut("Update")]
          public IActionResult Update([FromBody]Product model)
         {
