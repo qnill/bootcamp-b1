@@ -1,25 +1,33 @@
-﻿using net_core_bootcamp_b1.DTOs;
+﻿using Microsoft.EntityFrameworkCore;
+using net_core_bootcamp_b1.Database;
+using net_core_bootcamp_b1.DTOs;
 using net_core_bootcamp_b1.Helpers;
 using net_core_bootcamp_b1.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace net_core_bootcamp_b1.Services
 {
     public interface IProductService
     {
-        ApiResult Add(ProductAddDto model);
-        ApiResult Update(ProductUpdateDto model);
-        ApiResult Delete(Guid id);
-        IList<ProductGetDto> Get();
+        Task<ApiResult> Add(ProductAddDto model);
+        Task<ApiResult> Update(ProductUpdateDto model);
+        Task<ApiResult> Delete(Guid id);
+        Task<IList<ProductGetDto>> Get();
     }
 
     public class ProductService : IProductService
     {
-        private static readonly IList<Product> data = new List<Product>();
+        private readonly BootcampDbContext _context;
 
-        public ApiResult Add(ProductAddDto model)
+        public ProductService(BootcampDbContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<ApiResult> Add(ProductAddDto model)
         {
             Product entity = new Product
             {
@@ -31,39 +39,44 @@ namespace net_core_bootcamp_b1.Services
             entity.Desc = model.Desc;
             entity.Price = model.Price ?? 0;
 
-            data.Add(entity);
+            await _context.Product.AddAsync(entity);
+            await _context.SaveChangesAsync();
 
             return new ApiResult { Data = entity.Id, Message = ApiResultMessages.Ok };
         }
 
-        public ApiResult Update(ProductUpdateDto model)
+        public async Task<ApiResult> Update(ProductUpdateDto model)
         {
-            var entity = data.Where(x => !x.IsDeleted && x.Id == model.Id).FirstOrDefault();
+            var entity = await _context.Product.Where(x => !x.IsDeleted && x.Id == model.Id).FirstOrDefaultAsync();
             if (entity == null)
                 return new ApiResult { Data = model.Id, Message = ApiResultMessages.PRE01 };
 
             entity.Name = model.Name;
             entity.Desc = model.Desc;
 
+            await _context.SaveChangesAsync();
+
             return new ApiResult { Data = entity.Id, Message = ApiResultMessages.Ok };
         }
 
-        public ApiResult Delete(Guid id)
+        public async Task<ApiResult> Delete(Guid id)
         {
-            var entity = data.Where(x => x.Id == id).FirstOrDefault();
+            var entity = await _context.Product.Where(x => x.Id == id).FirstOrDefaultAsync();
             if (entity == null)
                 return new ApiResult { Data = id, Message = ApiResultMessages.PRE01 };
 
             entity.IsDeleted = true;
 
+            await _context.SaveChangesAsync();
+
             return new ApiResult { Data = entity.Id, Message = ApiResultMessages.Ok };
         }
 
-        public IList<ProductGetDto> Get()
+        public async Task<IList<ProductGetDto>> Get()
         {
             var result = new List<ProductGetDto>();
 
-            result = data
+            result = await _context.Product
                 .Where(x => !x.IsDeleted)
                 .Select(s => new ProductGetDto
                 {
@@ -73,7 +86,7 @@ namespace net_core_bootcamp_b1.Services
                     Desc = s.Desc,
                     Price = s.Price
                 })
-                .ToList();
+                .ToListAsync();
 
             return result;
         }

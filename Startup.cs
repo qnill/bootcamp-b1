@@ -50,8 +50,8 @@ namespace net_core_bootcamp_b1
                 .UseSqlServer(Configuration.GetConnectionString("BootcampDbConnection")));
 
             // DI
-            services.AddSingleton<IProductService, ProductService>();
-            services.AddSingleton<IEventService, EventService>();
+            services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<IEventService, EventService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

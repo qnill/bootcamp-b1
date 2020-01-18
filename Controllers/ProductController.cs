@@ -5,6 +5,7 @@ using net_core_bootcamp_b1.Helpers;
 using net_core_bootcamp_b1.Services;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace net_core_bootcamp_b1.Controllers
 {
@@ -27,9 +28,9 @@ namespace net_core_bootcamp_b1.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("Add")]
-        public IActionResult Add([FromBody]ProductAddDto model)
+        public async Task<IActionResult> Add([FromBody]ProductAddDto model)
         {
-            var result = _productService.Add(model);
+            var result = await _productService.Add(model);
 
             if (result.Message != ApiResultMessages.Ok)
                 return BadRequest(result);
@@ -43,9 +44,9 @@ namespace net_core_bootcamp_b1.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPut("Update")]
-        public IActionResult Update([FromBody]ProductUpdateDto model)
+        public async Task<IActionResult> Update([FromBody]ProductUpdateDto model)
         {
-            var result = _productService.Update(model);
+            var result = await _productService.Update(model);
 
             if (result.Message != ApiResultMessages.Ok)
                 return BadRequest(result);
@@ -54,9 +55,9 @@ namespace net_core_bootcamp_b1.Controllers
         }
 
         [HttpDelete("Delete")]
-        public IActionResult Delete([BindRequired]Guid id)
+        public async Task<IActionResult> Delete([BindRequired]Guid id)
         {
-            var result = _productService.Delete(id);
+            var result = await _productService.Delete(id);
 
             if (result.Message != ApiResultMessages.Ok)
                 return BadRequest(result);
@@ -70,9 +71,9 @@ namespace net_core_bootcamp_b1.Controllers
         /// <returns></returns>
         [HttpGet("Get")]
         [ProducesResponseType(typeof(IList<ProductGetDto>), 200)]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            var result = _productService.Get();
+            var result = await _productService.Get();
 
             return Ok(result);
         }
