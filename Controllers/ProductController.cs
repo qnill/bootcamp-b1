@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using net_core_bootcamp_b1.DTOs;
+using net_core_bootcamp_b1.Helpers;
 using net_core_bootcamp_b1.Services;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,9 @@ namespace net_core_bootcamp_b1.Controllers
         {
             var result = _productService.Add(model);
 
+            if (result.Message != ApiResultMessages.Ok)
+                return BadRequest(result);
+
             return Ok(result);
         }
 
@@ -43,6 +47,9 @@ namespace net_core_bootcamp_b1.Controllers
         {
             var result = _productService.Update(model);
 
+            if (result.Message != ApiResultMessages.Ok)
+                return BadRequest(result);
+
             return Ok(result);
         }
 
@@ -50,6 +57,9 @@ namespace net_core_bootcamp_b1.Controllers
         public IActionResult Delete([BindRequired]Guid id)
         {
             var result = _productService.Delete(id);
+
+            if (result.Message != ApiResultMessages.Ok)
+                return BadRequest(result);
 
             return Ok(result);
         }

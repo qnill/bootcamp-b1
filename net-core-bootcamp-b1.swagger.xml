@@ -24,5 +24,23 @@
             </summary>        
             <returns></returns>
         </member>
+        <member name="T:net_core_bootcamp_b1.Helpers.ApiResultMessages">
+            <summary>
+             5 Karakter olacak
+             Ilk 2 karakter ekranı belirtecek.
+             3. Karakter mesaj türünü belirtecek. (I : info, W:Warning, E:Error )
+             Son 2 karakter hatayı belirtecek.
+            </summary>
+        </member>
+        <member name="F:net_core_bootcamp_b1.Helpers.ApiResultMessages.Ok">
+            <summary>
+            All Process Succesfull
+            </summary>
+        </member>
+        <member name="F:net_core_bootcamp_b1.Helpers.ApiResultMessages.PRE01">
+            <summary>
+            No Products Found.
+            </summary>
+        </member>
     </members>
 </doc>

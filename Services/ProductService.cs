@@ -1,4 +1,5 @@
 ﻿using net_core_bootcamp_b1.DTOs;
+using net_core_bootcamp_b1.Helpers;
 using net_core_bootcamp_b1.Models;
 using System;
 using System.Collections.Generic;
@@ -8,9 +9,9 @@ namespace net_core_bootcamp_b1.Services
 {
     public interface IProductService
     {
-        string Add(ProductAddDto model);
-        string Update(ProductUpdateDto model);
-        string Delete(Guid id);
+        ApiResult Add(ProductAddDto model);
+        ApiResult Update(ProductUpdateDto model);
+        ApiResult Delete(Guid id);
         IList<ProductGetDto> Get();
     }
 
@@ -18,7 +19,7 @@ namespace net_core_bootcamp_b1.Services
     {
         private static readonly IList<Product> data = new List<Product>();
 
-        public string Add(ProductAddDto model)
+        public ApiResult Add(ProductAddDto model)
         {
             Product entity = new Product
             {
@@ -32,30 +33,30 @@ namespace net_core_bootcamp_b1.Services
 
             data.Add(entity);
 
-            return ($"{model.Name} eklendi");
+            return new ApiResult { Data = entity.Id, Message = ApiResultMessages.Ok };
         }
 
-        public string Update(ProductUpdateDto model)
+        public ApiResult Update(ProductUpdateDto model)
         {
             var entity = data.Where(x => !x.IsDeleted && x.Id == model.Id).FirstOrDefault();
             if (entity == null)
-                return ($"{model.Id} 'e ait kayıt bulunamadı");
+                return new ApiResult { Data = model.Id, Message = ApiResultMessages.PRE01 };
 
             entity.Name = model.Name;
             entity.Desc = model.Desc;
 
-            return ($"{entity.Id} 'e ait kayıt güncellendi");
+            return new ApiResult { Data = entity.Id, Message = ApiResultMessages.Ok };
         }
 
-        public string Delete(Guid id)
+        public ApiResult Delete(Guid id)
         {
             var entity = data.Where(x => x.Id == id).FirstOrDefault();
             if (entity == null)
-                return ($"{id} 'e ait kayıt bulunamadı");
+                return new ApiResult { Data = id, Message = ApiResultMessages.PRE01 };
 
             entity.IsDeleted = true;
 
-            return ($"{entity.Name} silindi");
+            return new ApiResult { Data = entity.Id, Message = ApiResultMessages.Ok };
         }
 
         public IList<ProductGetDto> Get()
