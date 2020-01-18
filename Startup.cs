@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using net_core_bootcamp_b1.Database;
 using net_core_bootcamp_b1.Services;
 using System;
 using System.IO;
@@ -43,6 +45,9 @@ namespace net_core_bootcamp_b1
             });
 
             services.AddControllers();
+
+            services.AddDbContext<BootcampDbContext>(options => options
+                .UseSqlServer(Configuration.GetConnectionString("BootcampDbConnection")));
 
             // DI
             services.AddSingleton<IProductService, ProductService>();
