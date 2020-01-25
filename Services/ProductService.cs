@@ -38,6 +38,7 @@ namespace net_core_bootcamp_b1.Services
             entity.Name = model.Name;
             entity.Desc = model.Desc;
             entity.Price = model.Price ?? 0;
+            entity.ProductCategoryId = model.ProductCategoryId;
 
             await _context.Product.AddAsync(entity);
             await _context.SaveChangesAsync();
@@ -53,6 +54,7 @@ namespace net_core_bootcamp_b1.Services
 
             entity.Name = model.Name;
             entity.Desc = model.Desc;
+            entity.ProductCategoryId = model.ProductCategoryId;
 
             await _context.SaveChangesAsync();
 
@@ -84,7 +86,9 @@ namespace net_core_bootcamp_b1.Services
                     CreatedAt = s.CreatedAt,
                     Name = s.Name,
                     Desc = s.Desc,
-                    Price = s.Price
+                    Price = s.Price,
+                    ProductCategoryId = s.ProductCategoryId,
+                    ProductCategoryName = s.ProductCategory.Name
                 })
                 .ToListAsync();
 

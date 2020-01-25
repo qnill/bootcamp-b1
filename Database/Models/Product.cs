@@ -10,5 +10,10 @@ namespace net_core_bootcamp_b1.Models
         public string Name { get; set; }
         public string Desc { get; set; }
         public double Price { get; set; }
+
+        // FK
+        // ProductCategory
+        public Guid ProductCategoryId { get; set; }
+        public ProductCategory ProductCategory { get; set; }
     }
 }

@@ -10,6 +10,8 @@ namespace net_core_bootcamp_b1.DTOs
         public string Desc { get; set; }
         [Required, Range(0, 1000)]
         public double? Price { get; set; }
+        [Required]
+        public Guid ProductCategoryId { get; set; }
     }
 
     public class ProductUpdateDto
@@ -19,6 +21,8 @@ namespace net_core_bootcamp_b1.DTOs
         [Required, MaxLength(50)]
         public string Name { get; set; }
         public string Desc { get; set; }
+        [Required]
+        public Guid ProductCategoryId { get; set; }
     }
 
     public class ProductGetDto
@@ -28,5 +32,12 @@ namespace net_core_bootcamp_b1.DTOs
         public string Name { get; set; }
         public string Desc { get; set; }
         public double Price { get; set; }
+
+        #region ProductCategory
+
+        public Guid ProductCategoryId { get; set; }
+        public string ProductCategoryName { get; set; }
+
+        #endregion
     }
 }
