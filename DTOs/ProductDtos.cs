@@ -40,4 +40,18 @@ namespace net_core_bootcamp_b1.DTOs
 
         #endregion
     }
+
+    public class ProductGetCountInCategoryDto
+    {
+        public Guid CategoryId { get; set; }
+        public string CategoryName { get; set; }
+        public int ProductCount { get; set; }
+    }
+
+    public class ProductGetTotalPriceInCategoryDto
+    {
+        public Guid CategoryId { get; set; }
+        public string CategoryName { get; set; }
+        public double TotalPrice { get; set; }
+    }
 }

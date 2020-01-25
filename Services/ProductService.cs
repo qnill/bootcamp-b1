@@ -16,6 +16,9 @@ namespace net_core_bootcamp_b1.Services
         Task<ApiResult> Update(ProductUpdateDto model);
         Task<ApiResult> Delete(Guid id);
         Task<IList<ProductGetDto>> Get();
+        Task<IList<ProductGetCountInCategoryDto>> GetCountInCategory();
+        Task<IList<ProductGetCountInCategoryDto>> GetCountInCategoryMTwo();
+        Task<IList<ProductGetTotalPriceInCategoryDto>> GetTotalPriceInCategory();
     }
 
     public class ProductService : IProductService
@@ -90,6 +93,61 @@ namespace net_core_bootcamp_b1.Services
                     ProductCategoryId = s.ProductCategoryId,
                     ProductCategoryName = s.ProductCategory.Name
                 })
+                .ToListAsync();
+
+            return result;
+        }
+
+        public async Task<IList<ProductGetCountInCategoryDto>> GetCountInCategory()
+        {
+            var result = await
+                (from product in _context.Product
+                 join category in _context.ProductCategory
+                    on new { product.ProductCategoryId, IsDeleted = false }
+                    equals new { ProductCategoryId = category.Id, category.IsDeleted }
+                 where !product.IsDeleted
+                 group category by new { category.Id, category.Name } into gp
+                 select new ProductGetCountInCategoryDto
+                 {
+                     CategoryId = gp.Key.Id,
+                     CategoryName = gp.Key.Name,
+                     ProductCount = gp.Count()
+                 })
+                 .OrderByDescending(o => o.ProductCount)
+                 .ToListAsync();
+
+            return result;
+        }
+
+        public async Task<IList<ProductGetCountInCategoryDto>> GetCountInCategoryMTwo()
+        {
+            var result = await _context.Product
+                .Where(x => !x.IsDeleted)
+                .GroupBy(gp => new { id = gp.ProductCategoryId, name = gp.ProductCategory.Name })
+                .Select(s => new ProductGetCountInCategoryDto
+                {
+                    CategoryId = s.Key.id,
+                    CategoryName = s.Key.name,
+                    ProductCount = s.Count()
+                })
+                .OrderByDescending(o => o.ProductCount)
+                .ToListAsync();
+
+            return result;
+        }
+
+        public async Task<IList<ProductGetTotalPriceInCategoryDto>> GetTotalPriceInCategory()
+        {
+            var result = await _context.Product
+                .Where(x => !x.IsDeleted)
+                .GroupBy(gp => new { id = gp.ProductCategoryId, name = gp.ProductCategory.Name })
+                .Select(s => new ProductGetTotalPriceInCategoryDto
+                {
+                    CategoryId = s.Key.id,
+                    CategoryName = s.Key.name,
+                    TotalPrice = s.Sum(sm => sm.Price)
+                })
+                .OrderByDescending(o => o.TotalPrice)
                 .ToListAsync();
 
             return result;

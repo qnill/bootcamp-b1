@@ -77,5 +77,32 @@ namespace net_core_bootcamp_b1.Controllers
 
             return Ok(result);
         }
+
+        [HttpGet("Get/Count/InCategory")]
+        [ProducesResponseType(typeof(IList<ProductGetCountInCategoryDto>), 200)]
+        public async Task<IActionResult> GetCountInCategory()
+        {
+            var result = await _productService.GetCountInCategory();
+
+            return Ok(result);
+        }
+
+        [HttpGet("Get/Count/InCategoryMTwo")]
+        [ProducesResponseType(typeof(IList<ProductGetCountInCategoryDto>), 200)]
+        public async Task<IActionResult> GetCountInCategoryMTwo()
+        {
+            var result = await _productService.GetCountInCategoryMTwo();
+
+            return Ok(result);
+        }
+
+        [HttpGet("Get/TotalPrice/InCategory")]
+        [ProducesResponseType(typeof(IList<ProductGetTotalPriceInCategoryDto>), 200)]
+        public async Task<IActionResult> GetTotalPriceInCategory()
+        {
+            var result = await _productService.GetTotalPriceInCategory();
+
+            return Ok(result);
+        }
     }
 }
