@@ -11,5 +11,6 @@ namespace net_core_bootcamp_b1.Database
         }
 
         public DbSet<Product> Product { get; set; }
+        public DbSet<ProductCategory> ProductCategory { get; set; }
     }
 }

@@ -42,5 +42,10 @@
             No Products Found.
             </summary>
         </member>
+        <member name="F:net_core_bootcamp_b1.Helpers.ApiResultMessages.PCE01">
+            <summary>
+            No Product Category Found.
+            </summary>
+        </member>
     </members>
 </doc>

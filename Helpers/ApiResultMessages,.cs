@@ -21,5 +21,14 @@
         public const string PRE01 = "PRE01";
 
         #endregion
+
+        #region ProductCategory
+
+        /// <summary>
+        /// No Product Category Found.
+        /// </summary>
+        public const string PCE01 = "PCE01";
+
+        #endregion
     }
 }
